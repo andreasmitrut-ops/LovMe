@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#ff4f8b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mi ami?">
+  <title>Mi ami? ❤️</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <style>
+    :root {
+      --pink: #ff4f8b;
+      --dark: #a91f52;
+      --soft: #ffe0ec;
+      --card: rgba(255,255,255,.96);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      overscroll-behavior: none;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,.88) 0 7%, transparent 28%),
+        radial-gradient(circle at 82% 88%, rgba(255,255,255,.5) 0 5%, transparent 27%),
+        linear-gradient(145deg, #ffd6e5 0%, #ffb9d1 50%, #ff8fb7 100%);
+      position: relative;
+      touch-action: manipulation;
+    }
+
+    .floating-heart {
+      position: absolute;
+      opacity: .18;
+      font-size: 28px;
+      animation: float 6s ease-in-out infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .h1 { left: 8%; top: 12%; animation-delay: 0s; }
+    .h2 { right: 9%; top: 20%; animation-delay: .8s; font-size: 42px; }
+    .h3 { left: 14%; bottom: 12%; animation-delay: 1.6s; font-size: 36px; }
+    .h4 { right: 14%; bottom: 18%; animation-delay: 2.4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-16px) rotate(7deg); }
+    }
+
+    #stage {
+      position: fixed;
+      inset:
+        max(14px, env(safe-area-inset-top))
+        max(14px, env(safe-area-inset-right))
+        max(14px, env(safe-area-inset-bottom))
+        max(14px, env(safe-area-inset-left));
+    }
+
+    #card {
+      position: absolute;
+      width: min(88vw, 390px);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 28px;
+      padding: 30px 22px 24px;
+      text-align: center;
+      box-shadow:
+        0 24px 60px rgba(124, 20, 60, .23),
+        inset 0 1px 0 rgba(255,255,255,.9);
+      transition:
+        left .38s cubic-bezier(.2,.9,.25,1),
+        top .38s cubic-bezier(.2,.9,.25,1),
+        transform .38s cubic-bezier(.2,.9,.25,1);
+      will-change: left, top, transform;
+    }
+
+    .main-heart {
+      font-size: 58px;
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: beat 1.05s ease-in-out infinite;
+      user-select: none;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      45% { transform: scale(1.13); }
+    }
+
+    h1 {
+      margin: 5px 0 24px;
+      color: var(--dark);
+      font-size: clamp(27px, 7vw, 38px);
+      line-height: 1.12;
+      letter-spacing: -.02em;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      appearance: none;
+      -webkit-appearance: none;
+      border: none;
+      min-height: 54px;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    button:active {
+      transform: scale(.96);
+    }
+
+    #yesBtn {
+      color: white;
+      background: linear-gradient(135deg, #ff5b95, #e72f72);
+      box-shadow: 0 10px 22px rgba(231,47,114,.3);
+    }
+
+    #noBtn {
+      color: #8d2c53;
+      background: #ffe1ec;
+    }
+
+    .hint {
+      margin-top: 16px;
+      color: #9c6479;
+      font-size: 13px;
+    }
+
+    .sad {
+      font-size: 76px;
+      line-height: 1;
+      margin-bottom: 10px;
+      animation: wobble 1.2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%,100% { transform: rotate(0deg); }
+      30% { transform: rotate(-5deg); }
+      70% { transform: rotate(5deg); }
+    }
+
+    .sadText {
+      color: #8f3c5d;
+      font-size: 19px;
+      margin: 0 4px 20px;
+      line-height: 1.35;
+    }
+
+    .retry {
+      width: 100%;
+      background: linear-gradient(135deg, #ff5b95, #e72f72);
+      color: white;
+      box-shadow: 0 10px 22px rgba(231,47,114,.25);
+    }
+
+    .pop {
+      animation: pop .28s ease-out;
+    }
+
+    @keyframes pop {
+      0% { scale: .94; }
+      60% { scale: 1.035; }
+      100% { scale: 1; }
+    }
+
+    @media (max-height: 600px) {
+      #card { padding: 20px; }
+      .main-heart { font-size: 44px; }
+      h1 { margin-bottom: 17px; }
+      button { min-height: 48px; }
+      .hint { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="floating-heart h1">❤️</div>
+  <div class="floating-heart h2">💕</div>
+  <div class="floating-heart h3">💗</div>
+  <div class="floating-heart h4">💖</div>
+
+  <main id="stage">
+    <section id="card" aria-live="polite">
+      <div class="main-heart">❤️</div>
+      <h1 id="question">Mi ami?</h1>
+
+      <div class="buttons">
+        <button id="yesBtn" type="button">Sì 💖</button>
+        <button id="noBtn" type="button">No</button>
+      </div>
+
+      <div class="hint">Scegli con attenzione 👀</div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      "Mi ami?",
+      "Ma davvero?",
+      "Sì? Ma davvero davvero?",
+      "Ma sei proprio sicuro?",
+      "Sicuro sicuro?",
+      "Al 100%?",
+      "Nessun dubbio?",
+      "Quindi mi ami tantissimo?",
+      "Tantissimo tantissimo?",
+      "Più di ieri?",
+      "E anche domani?",
+      "Ultimissima conferma… sei sicuro?",
+      "Davvero davvero davvero?",
+      "Ancora sì? 😳",
+      "Okay… ma SEI SICURO? 😂"
+    ];
+
+    const card = document.getElementById("card");
+    const stage = document.getElementById("stage");
+    const question = document.getElementById("question");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    let index = 0;
+
+    function animateCard() {
+      card.classList.remove("pop");
+      void card.offsetWidth;
+      card.classList.add("pop");
+    }
+
+    function moveCard() {
+      const stageRect = stage.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+
+      const margin = 6;
+      const maxLeft = Math.max(margin, stageRect.width - cardRect.width - margin);
+      const maxTop  = Math.max(margin, stageRect.height - cardRect.height - margin);
+
+      const x = margin + Math.random() * Math.max(0, maxLeft - margin);
+      const y = margin + Math.random() * Math.max(0, maxTop - margin);
+
+      card.style.transform = "none";
+      card.style.left = `${x}px`;
+      card.style.top = `${y}px`;
+    }
+
+    yesBtn.addEventListener("click", () => {
+      index = (index + 1) % questions.length;
+      question.textContent = questions[index];
+      animateCard();
+      requestAnimationFrame(() => requestAnimationFrame(moveCard));
+    });
+
+    noBtn.addEventListener("click", () => {
+      card.style.left = "50%";
+      card.style.top = "50%";
+      card.style.transform = "translate(-50%, -50%)";
+
+      card.innerHTML = `
+        <div class="sad">🥺</div>
+        <h1>Oh no…</h1>
+        <p class="sadText">Mi hai spezzato il cuoricino 💔</p>
+        <button class="retry" type="button" onclick="location.reload()">Riproviamo? 🥹</button>
+      `;
+      animateCard();
+    });
+
+    window.addEventListener("resize", () => {
+      card.style.left = "50%";
+      card.style.top = "50%";
+      card.style.transform = "translate(-50%, -50%)";
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
